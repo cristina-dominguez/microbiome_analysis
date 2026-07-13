@@ -1,2 +1,189 @@
 # microbiome_analysis
 A reproducible pipeline for 16S rRNA amplicon data abalysis obtained from public repositories, from raw FASTQ files to taxonomic and functional profiling. Includes DADA2-based ASV inference, phyloseq analyses, alpha/beta diversity, LEfSe biomarker discovery, and PICRUSt2 functional prediction
+## Overview
+
+This repository contains a complete workflow for the taxonomic and functional analysis of 16S rRNA gene amplicon sequencing data.
+
+The pipeline consists of five sequential steps:
+
+1. Sequence preprocessing
+2. Taxonomic assignment
+3. Taxonomic diversity and composition analyses
+4. Functional prediction using PICRUSt2
+5. Functional statistical analyses
+
+The workflow was developed using R and PICRUSt2.
+
+---
+
+# Repository structure
+
+```
+scripts/
+data/
+```
+
+---
+
+# Scripts
+
+## 01_sequence_preprocessing.R
+
+This script performs preprocessing of raw paired-end FASTQ files using DADA2.
+
+Main steps include:
+
+- Quality assessment
+- Primer/adaptor trimming (if required)
+- Quality filtering
+- Error model learning
+- Dereplication
+- ASV inference
+- Merging paired-end reads
+- Chimera removal
+- Generation of the ASV abundance table
+- Export of representative sequences
+
+Output:
+
+- ASV abundance table
+- Representative sequences (FASTA)
+
+---
+
+## 02_taxonomic_assignment.R
+
+This script assigns taxonomy to representative ASVs using the SILVA reference database.
+
+Main steps include:
+
+- Taxonomic assignment
+- Species-level assignment (optional)
+- Construction of a phyloseq object
+- Export of taxonomic tables
+- Export of representative sequences for PICRUSt2
+
+Output:
+
+- Taxonomy table
+- phyloseq object
+- Representative sequences
+
+---
+
+## 03_taxonomic_analysis.R
+
+This script performs ecological and taxonomic analyses.
+
+Analyses include:
+
+- Alpha diversity
+- Beta diversity
+- Relative abundance
+- Differential abundance analyses
+- Taxonomic visualizations
+
+Output:
+
+- Statistical tables
+- Publication-ready figures
+
+---
+
+## 04_picrust2.sh
+
+This Bash script performs functional prediction using PICRUSt2.
+
+Main steps include:
+
+- Sequence placement
+- Hidden-state prediction
+- Gene family prediction
+- EC prediction
+- KEGG Ortholog prediction
+- MetaCyc pathway inference
+
+Output:
+
+- KO abundance tables
+- EC abundance tables
+- MetaCyc pathway abundances
+
+---
+
+## 05_functional_analysis.R
+
+This script imports PICRUSt2 outputs and performs downstream statistical analyses.
+
+Analyses include:
+
+- Functional diversity
+- Differential pathway abundance
+- Data visualization
+- Statistical testing
+
+Output:
+
+- Statistical results
+- Publication-ready figures
+
+---
+
+# Reference database
+
+Taxonomic assignment requires the SILVA database.
+
+Download the appropriate SILVA release and place the files inside:
+
+reference_database/silva/
+
+The repository does not include SILVA because of its size.
+
+---
+
+# Intermediate files
+
+Intermediate phyloseq objects generated during the workflow can be stored in
+
+data/intermediate/
+
+including
+
+- phyloseq object after taxonomic assignment
+- phyloseq object containing functional predictions
+
+These files allow downstream analyses without repeating computationally intensive preprocessing.
+
+---
+
+# Running the pipeline
+
+The scripts should be executed in the following order:
+
+1. 01_sequence_preprocessing.R
+2. 02_taxonomic_assignment.R
+3. 03_taxonomic_analysis.R
+4. 04_picrust2.sh
+5. 05_functional_analysis.R
+
+---
+
+## Acknowledgements
+
+This pipeline makes use of several open-source software packages, including:
+
+- DADA2
+- phyloseq
+- PICRUSt2
+- vegan
+- ggplot2
+
+We gratefully acknowledge the developers of these tools.
+
+---
+
+# Author
+
+Cristina Domínguez Verde, cdominguez@unizar.es
+
+University of Zaragoza
