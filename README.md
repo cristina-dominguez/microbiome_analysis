@@ -132,10 +132,11 @@ Output:
 # Reference database
 
 Taxonomic assignment requires the SILVA database.
+ 
+Required files:
 
-Download the appropriate SILVA release and place the files inside:
-
-reference_database/silva/
+- `silva_nr99_v138.1_train_set.fa.gz`
+- `silva_species_assignment_v138.1.fa.gz`
 
 The repository does not include SILVA because of its size.
 
